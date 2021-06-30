@@ -1,0 +1,11 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - deploy:
+          command: |
+            docker build -t parkwhiz/streets-shim:$CIRCLE_BRANCH-$CIRCLE_SHA1 -f Dockerfile .
+            docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+            docker push parkwhiz/streets-shim:$CIRCLE_BRANCH-$CIRCLE_SHA1
